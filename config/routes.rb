@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  namespace :report do
-    get 'photos/:id', to: 'photos#show'
+  scope :report do
+    get 'rev', to: 'report#rev'
   end
 end
