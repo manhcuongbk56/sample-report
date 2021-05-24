@@ -59,6 +59,8 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
+  username: og_admin_rails_test
+  password: cuong123
   database: og_admin_rails_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
