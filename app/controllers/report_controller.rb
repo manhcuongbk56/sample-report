@@ -9,10 +9,19 @@ class ReportController < ApplicationController
     process_request do
       ValidateParamUtil.require_not_nil(params, :start)
       ValidateParamUtil.require_not_nil(params, :end)
-      start_time = params[:start].to_datetime
-      end_time = params[:end].to_datetime
-      data = UserReportService.get_new_register(start_time, end_time)
-      render json: MakeResponseUtil.get_response(data: data)
+      start_time = params[:start].to_time
+      end_time = params[:end].to_time
+      UserReportService.get_new_register(start_time, end_time)
+    end
+  end
+
+  def download_time
+    process_request do
+      ValidateParamUtil.require_not_nil(params, :start)
+      ValidateParamUtil.require_not_nil(params, :end)
+      start_time = params[:start].to_time
+      end_time = params[:end].to_time
+      UserReportService.get_new_register(start_time, end_time)
     end
   end
 
