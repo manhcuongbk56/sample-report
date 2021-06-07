@@ -1,8 +1,7 @@
 require 'rails_helper'
-require 'models/os_name'
 
 def create_device(os_name, application_key, created_at)
-  create(:installed_device,os_name: os_name, application_key: application_key, created_at: created_at)
+  create(:installed_device, os_name: os_name, application_key: application_key, created_at: created_at)
 end
 
 def create_android(application_key, created_at)
@@ -27,25 +26,104 @@ RSpec.describe "Reports", type: :request do
       expect(response.content_type).to eq('application/json; charset=utf-8')
     end
     it 'should get all device installed' do
-      3.times {      create_android(game_1, '2019-09-07T-13:50+07') }
-      3.times {      create_android(game_2, '2019-09-07T-13:50+07') }
-      1.times {      create_ios(game_1, '2019-09-07T-13:50+07') }
-      2.times {      create_ios(game_2, '2019-09-07T-13:50+07') }
+      3.times { create_android(game_1, '2019-09-07T-13:50+07') }
+      3.times { create_android(game_2, '2019-09-07T-13:50+07') }
+      1.times { create_ios(game_1, '2019-09-07T-13:50+07') }
+      2.times { create_ios(game_2, '2019-09-07T-13:50+07') }
 
-      3.times {      create_android(game_1, '2019-09-08T-13:50+07') }
-      3.times {      create_android(game_2, '2019-09-08T-13:50+07') }
-      1.times {      create_ios(game_1, '2019-09-08T-13:50+07') }
-      2.times {      create_ios(game_2, '2019-09-08T-13:50+07') }
+      3.times { create_android(game_1, '2019-09-08T-13:50+07') }
+      3.times { create_android(game_2, '2019-09-08T-13:50+07') }
+      1.times { create_ios(game_1, '2019-09-08T-13:50+07') }
+      2.times { create_ios(game_2, '2019-09-08T-13:50+07') }
 
-      4.times {      create_android(game_1, '2019-09-10T-13:50+07') }
-      4.times {      create_android(game_2, '2019-09-10T-13:50+07') }
-      1.times {      create_ios(game_1, '2019-09-10T-13:50+07') }
-      2.times {      create_ios(game_2, '2019-09-10T-13:50+07') }
+      4.times { create_android(game_1, '2019-09-10T-13:50+07') }
+      4.times { create_android(game_2, '2019-09-10T-13:50+07') }
+      1.times { create_ios(game_1, '2019-09-10T-13:50+07') }
+      2.times { create_ios(game_2, '2019-09-10T-13:50+07') }
 
-      5.times {      create_android(game_1, '2019-09-13T-13:50+07') }
-      5.times {      create_android(game_2, '2019-09-13T-13:50+07') }
-      1.times {      create_ios(game_1, '2019-09-13T-13:50+07') }
-      2.times {      create_ios(game_2, '2019-09-13T-13:50+07') }
+      5.times { create_android(game_1, '2019-09-13T-13:50+07') }
+      5.times { create_android(game_2, '2019-09-13T-13:50+07') }
+      1.times { create_ios(game_1, '2019-09-13T-13:50+07') }
+      2.times { create_ios(game_2, '2019-09-13T-13:50+07') }
+      10.times { create_ios(game_2, '2019-09-14T-13:50+07') }
+      expected = { data: { totalAmount: 42,
+                           apps: [{
+                                    name: game_1,
+                                    amount: 19,
+                                    osDownloads: [{
+                                                    name: OsName::ANDROID,
+                                                    amount: 15,
+                                                    amountInDays: [{
+                                                                     date: '2019-09-07T00:00Z',
+                                                                     amount: 3
+                                                                   },
+                                                                   {
+                                                                     date: '2019-09-08T00:00Z',
+                                                                     amount: 3
+                                                                   },
+                                                                   {
+                                                                     date: '2019-09-09T00:00Z',
+                                                                     amount: 0
+                                                                   },
+                                                                   {
+                                                                     date: '2019-09-10T00:00Z',
+                                                                     amount: 4
+                                                                   },
+                                                                   {
+                                                                     date: '2019-09-11T00:00Z',
+                                                                     amount: 0
+                                                                   },
+                                                                   {
+                                                                     date: '2019-09-12T00:00Z',
+                                                                     amount: 0
+                                                                   },
+                                                                   {
+                                                                     date: '2019-09-13T00:00Z',
+                                                                     amount: 5
+                                                                   }
+                                                    ]
+                                                  },
+                                                  {
+                                                    name: OsName::IOS,
+                                                    amount: 4,
+                                                    amountInDays: [{
+                                                                     date: '2019-09-07T00:00Z',
+                                                                     amount: 3
+                                                                   },
+                                                                   {
+                                                                     date: '2019-09-08T00:00Z',
+                                                                     amount: 3
+                                                                   },
+                                                                   {
+                                                                     date: '2019-09-09T00:00Z',
+                                                                     amount: 0
+                                                                   },
+                                                                   {
+                                                                     date: '2019-09-10T00:00Z',
+                                                                     amount: 4
+                                                                   },
+                                                                   {
+                                                                     date: '2019-09-11T00:00Z',
+                                                                     amount: 0
+                                                                   },
+                                                                   {
+                                                                     date: '2019-09-12T00:00Z',
+                                                                     amount: 0
+                                                                   },
+                                                                   {
+                                                                     date: '2019-09-13T00:00Z',
+                                                                     amount: 5
+                                                                   }
+                                                    ]
+                                                  }]
+                                  }, {
+                                    name: game_2,
+                                    amount: 23,
+                                    osDownloads: []
+                                  }]
+      }
+
+      }
       get '/stats/download-time?start=2019-09-07T-15:50+07&end=2019-09-15T-15:50+07&app', params: { format: :json }
 
     end
@@ -66,7 +144,6 @@ RSpec.describe "Reports", type: :request do
       puts response
       expect(response).to have_http_status(:bad_request)
     end
-
 
   end
 end
